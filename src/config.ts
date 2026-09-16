@@ -1,27 +1,37 @@
-import { Regex, type SomeCompanionConfigField } from '@companion-module/base'
+import type { SomeCompanionConfigField } from '@companion-module/base'
 
 export type ModuleConfig = {
-	host: string
-	port: number
+	tokenLabel: string
+}
+
+export type ModuleSecrets = {
+	apiToken: string
 }
 
 export function GetConfigFields(): SomeCompanionConfigField[] {
 	return [
 		{
-			type: 'textinput',
-			id: 'host',
-			label: 'Target IP',
-			width: 8,
-			regex: Regex.IP,
+			type: 'static-text',
+			id: 'info',
+			label: 'API Token',
+			width: 12,
+			value:
+				'Create a token in Yodeck under Account Settings → Advanced Settings → API Tokens, ' +
+				'then enter its label and value below.',
 		},
 		{
-			type: 'number',
-			id: 'port',
-			label: 'Target Port',
-			width: 4,
-			min: 1,
-			max: 65535,
-			default: 8000,
+			type: 'textinput',
+			id: 'tokenLabel',
+			label: 'API Token Label',
+			width: 6,
+			tooltip: 'The label shown next to the token in the Yodeck API Tokens list.',
+		},
+		{
+			type: 'secret-text',
+			id: 'apiToken',
+			label: 'API Token Value',
+			width: 6,
+			tooltip: 'The secret token value from Yodeck.',
 		},
 	]
 }
